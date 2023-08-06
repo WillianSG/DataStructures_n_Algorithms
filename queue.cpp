@@ -44,6 +44,11 @@ void prepend_node(NODE **headref, NODE *newnode) {
 	*headref = newnode;
 }
 
+void dequeue(NODE **headref) {
+
+	*headref = (*headref)->next;
+}
+
 void show_list(NODE **headref) {
 	// Traverses the linked list and shows all stores values.
 
@@ -62,6 +67,8 @@ int main() {
 	NODE *head = (NODE*)malloc(sizeof(NODE));
 	head = NULL;
 
+	cout << "queueing...\n";
+
 	append_node(&head, create_node(15));
 	append_node(&head, create_node(1));
 	append_node(&head, create_node(20));
@@ -69,11 +76,26 @@ int main() {
 
 	show_list(&head);
 
-	cout << '\n';
+	cout << "prepending...\n";
 
 	prepend_node(&head, create_node(0));
 	prepend_node(&head, create_node(7));
 
+	show_list(&head);
+
+	cout << "dequeueing...\n";
+
+	dequeue(&head);
+	show_list(&head);
+
+	cout << "dequeueing...\n";
+
+	dequeue(&head);
+	show_list(&head);
+
+	cout << "dequeueing...\n";
+
+	dequeue(&head);
 	show_list(&head);
 
 }
