@@ -54,8 +54,8 @@ class Sequential {
         }
     }
 
-    virtual void push(int val) {}
-    virtual int pop() { return 0; }
+    virtual void push(int val) =0;
+    virtual int pop() =0;
 };
 
 class Queue : public Sequential {
