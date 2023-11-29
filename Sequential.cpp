@@ -7,13 +7,13 @@ class Sequential {
 
     protected:
 
-    typedef struct ll_node {
+    struct node {
         int value;
-        struct ll_node *next;
-    } NODE;
+        struct node *next;
+    };
 
-    NODE *create_node(int val) {
-        NODE *new_node = new NODE;
+    node *create_node(int val) {
+        node *new_node = new node;
 
         new_node->value = val;
         new_node->next = nullptr;
@@ -21,17 +21,17 @@ class Sequential {
         return new_node;
     }
 
-    NODE *head;
+    node *head;
 
     public:
 
     Sequential() : head(nullptr) {}
 
     ~Sequential() {
-        NODE* node_tracer = head;
+        node* node_tracer = head;
 
         while (node_tracer) {
-            NODE* temp = node_tracer;
+            node* temp = node_tracer;
             node_tracer = node_tracer->next;
             delete temp;
         }
@@ -43,7 +43,7 @@ class Sequential {
         } else {
             cout << "Content:" << endl;
 
-            NODE **node_tracer = &head;
+            node **node_tracer = &head;
 
             while (*node_tracer) {
                 cout << (*node_tracer)->value << endl;
@@ -63,8 +63,8 @@ class Queue : public Sequential {
     public:
 
     void push(int val) override {
-        NODE **node_tracer = &head;
-        NODE *new_node = create_node(val);
+        node **node_tracer = &head;
+        node *new_node = create_node(val);
 
         while (*node_tracer) {
             node_tracer = &(*node_tracer)->next;	
@@ -82,7 +82,7 @@ class Queue : public Sequential {
         } else {
             int value = head->value;
 
-            NODE *temp = head;
+            node *temp = head;
             head = head->next;
 
             delete temp;
