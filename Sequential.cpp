@@ -1,18 +1,19 @@
-#include <cstdlib>
+#include<cstdlib>
 #include<iostream>
 
 using namespace std;
 
+template <class T>
 class Sequential {
 
     protected:
 
     struct node {
-        int value;
+        T value;
         struct node *next;
     };
 
-    node *create_node(int val) {
+    node *create_node(T val) {
         node *new_node = new node;
 
         new_node->value = val;
@@ -38,8 +39,8 @@ class Sequential {
     }
 
     void show() {
-        if (!head) { 
-            cout << "Empty data structure." << endl;
+        if (!head) {
+            throw std::runtime_error("Empty data structure.");
         } else {
             cout << "Content:" << endl;
 
@@ -54,17 +55,20 @@ class Sequential {
         }
     }
 
-    virtual void push(int val) =0;
-    virtual int pop() =0;
+    virtual void push(T val) =0;
+    virtual T pop() =0;
 };
 
-class Queue : public Sequential {
+template <class T>
+class Queue : public Sequential<T> {
     
     public:
 
-    void push(int val) override {
-        node **node_tracer = &head;
-        node *new_node = create_node(val);
+    void push(T val) override {
+        typename Sequential<T>::node **node_tracer = &this->head;
+
+        // @TODO: Error thrown if "this->" is not used here. Find out why.
+        typename Sequential<T>::node *new_node = this->create_node(val);
 
         while (*node_tracer) {
             node_tracer = &(*node_tracer)->next;	
@@ -74,16 +78,15 @@ class Queue : public Sequential {
         *node_tracer = new_node;
     };
 
-    int pop() override {
+    T pop() override {
 
-        if (!head) { 
-            cout << "Empty queue." << endl;
-            return -1;
+        if (!this->head) { 
+            throw std::runtime_error("Empty queue.");
         } else {
-            int value = head->value;
+            T value = this->head->value;
 
-            node *temp = head;
-            head = head->next;
+            typename Sequential<T>::node *temp = this->head;
+            this->head = this->head->next;
 
             delete temp;
             return value;
@@ -94,9 +97,28 @@ class Queue : public Sequential {
 
 int main() {
 
-    Queue q;
+    // Queue<char> q;
 
-    q.show();
+    // // q.show();
+
+    // q.push('a');
+    // q.push('b');
+    // q.push('c');
+    // q.show();
+
+    // q.pop();
+    // q.show();
+
+    // q.push('d');
+    // q.show();
+    // q.pop();
+    // q.pop();
+    // q.pop();
+    // q.pop();
+
+    Queue<int> q;
+
+    // q.show();
 
     q.push(5);
     q.push(10);
